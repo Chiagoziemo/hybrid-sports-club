@@ -41,6 +41,15 @@ function RegisterForm() {
     setDone(true);
   };
 
+  const inviteFriend = async () => {
+    const text = `I'm going to Hybrid Sports Club's One-Year Anniversary Festival${featured ? ` on ${featured.dateLabel}` : ""} — come with me!`;
+    const url = location.href.split("#")[0] + "#register";
+    if (navigator.share) {
+      try { await navigator.share({ title: "Hybrid Sports Club Festival", text, url }); return; } catch (_) { return; }
+    }
+    window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, "_blank");
+  };
+
   return (
     <section id="register" className="section blk-paper">
       <div className="wrap">
@@ -57,7 +66,7 @@ function RegisterForm() {
               <div style={{ font: "var(--text-title-lg)", color: "#fff" }}>You're in! See you on 1 August.</div>
               <p style={{ font: "var(--text-body-md)", color: "var(--navy-200)", margin: "8px 0 4px" }}>Saturday, 1 August 2026 · Alaro City, Epe, Lagos</p>
               <p style={{ font: "var(--text-body-sm)", color: "var(--navy-300)", margin: "0 0 20px" }}>Bring a friend — the more, the merrier.</p>
-              <div className="btn-pill"><Button variant="secondary" size="md" icon={<Icon name="share-2" size={16} />} style={{ borderRadius: "var(--radius-full)" }}>Add a friend</Button></div>
+              <div className="btn-pill"><Button variant="secondary" size="md" icon={<Icon name="share-2" size={16} />} style={{ borderRadius: "var(--radius-full)" }} onClick={inviteFriend}>Add a friend</Button></div>
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>

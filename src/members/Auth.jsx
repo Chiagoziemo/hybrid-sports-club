@@ -101,8 +101,9 @@ function SignupScreen({ onResolved }) {
     setErr(e);
     if (Object.keys(e).length) return;
     setBusy(true);
-    await onResolved({ name: name.trim(), phone: phone.trim() });
+    const result = await onResolved({ name: name.trim(), phone: phone.trim() });
     setBusy(false);
+    if (result && result.error) setErr({ submit: "Something went wrong — try again." });
   };
   return (
     <AuthShell kicker="Join the crew" title="Set up your account" subtitle="We'll use your phone number to add you to the WhatsApp community, and this email to log you in from now on.">
@@ -110,6 +111,7 @@ function SignupScreen({ onResolved }) {
         <Input label="Full name" placeholder="e.g. Ada Obi" value={name} onChange={(e) => { setName(e.target.value); setErr((p) => ({ ...p, name: "" })); }} error={err.name} />
         <Input label="Phone / WhatsApp number" placeholder="+234 800 000 0000" value={phone} onChange={(e) => { setPhone(e.target.value); setErr((p) => ({ ...p, phone: "" })); }}
           error={err.phone} icon={<Icon name="phone" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
+        {err.submit && <p style={{ font: "var(--text-body-sm)", color: "var(--danger)", margin: 0 }}>{err.submit}</p>}
         <Button variant="primary" size="lg" className="pillbtn" style={{ width: "100%" }} disabled={busy} onClick={go}>{busy ? "Saving…" : "Create my account"}</Button>
       </div>
     </AuthShell>);

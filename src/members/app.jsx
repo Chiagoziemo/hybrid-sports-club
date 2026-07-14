@@ -94,8 +94,9 @@ function MembersApp() {
 
   const onSignupResolved = async ({ name, phone }) => {
     const { error } = await window.sb.rpc("complete_member_signup", { p_name: name, p_phone: phone });
-    if (error) { console.error(error); return; }
+    if (error) { console.error(error); return { error }; }
     await bootstrap();
+    return { error: null };
   };
 
   const onRsvp = async (eventId) => {
