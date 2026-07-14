@@ -8,7 +8,7 @@ function Events() {
   return (
     <section id="events" className="section blk-paper2">
       <div className="wrap">
-        <div className="grid" style={{ gridTemplateColumns: "minmax(280px, 380px) 1fr", gap: 56, alignItems: "flex-start" }}>
+        <div className="grid grid-events" style={{ gap: 56, alignItems: "flex-start" }}>
           {/* Left header column */}
           <div className="reveal">
             <NKicker n="03">Experiences</NKicker>

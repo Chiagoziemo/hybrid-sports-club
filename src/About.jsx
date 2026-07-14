@@ -25,7 +25,7 @@ function About() {
 
         {/* Founded-at box + photos */}
         <div className="grid reveal" style={{ gridTemplateColumns: "1fr", gap: 20, marginTop: 48 }}>
-          <div className="grid" style={{ gridTemplateColumns: "minmax(220px, 320px) 1fr", gap: 20, alignItems: "stretch" }}>
+          <div className="grid grid-about-stat" style={{ gap: 20, alignItems: "stretch" }}>
             <div className="blk-green" style={{ borderRadius: "var(--radius-lg)", padding: "32px 30px", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 260 }}>
               <div style={{ font: "var(--text-label-lg)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--navy-950)" }}>On the grass since</div>
               <div className="stat-num" style={{ color: "var(--navy-950)" }}>2025</div>

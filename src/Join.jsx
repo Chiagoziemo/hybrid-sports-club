@@ -105,7 +105,7 @@ function Join() {
       <img src={PHOTO("group-stretch-pitch")} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.14 }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, var(--navy-950) 0%, rgba(5,7,13,0.9) 100%)" }} />
       <div className="wrap" style={{ position: "relative" }}>
-        <div className="grid" style={{ gridTemplateColumns: "1.05fr 0.95fr", gap: 56, alignItems: "flex-start" }}>
+        <div className="grid grid-join" style={{ gap: 56, alignItems: "flex-start" }}>
           {/* How to join — numbered steps */}
           <div className="reveal">
             <NKicker n="04" style={{ color: "#fff" }}>How to join</NKicker>

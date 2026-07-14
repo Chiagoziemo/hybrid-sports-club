@@ -142,6 +142,15 @@
     .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 
+  /* asymmetric two-column layouts — single column until there's room for the wider track's minimum */
+  .grid-benefits, .grid-about-stat, .grid-events, .grid-join { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 720px) {
+    .grid-benefits { grid-template-columns: minmax(280px, 440px) minmax(0, 1fr); }
+    .grid-about-stat { grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); }
+    .grid-events { grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); }
+    .grid-join { grid-template-columns: 1.05fr 0.95fr; }
+  }
+
   /* countdown — big bold numerals, no cage */
   .cd { display: flex; gap: 28px; flex-wrap: wrap; }
   .cd-cell { text-align: left; }

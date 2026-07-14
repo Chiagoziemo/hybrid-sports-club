@@ -12,7 +12,7 @@ function Benefits() {
           </p>
         </div>
 
-        <div className="grid reveal" style={{ gridTemplateColumns: "minmax(280px, 440px) 1fr", gap: 48, alignItems: "center" }}>
+        <div className="grid reveal grid-benefits" style={{ gap: 48, alignItems: "center" }}>
           <div style={{ borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-lg)", minHeight: 460 }}>
             <img src={PHOTO("group-stretch")} alt="Hybrid members stretching together" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
