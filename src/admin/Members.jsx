@@ -26,6 +26,21 @@ function MembersPanel() {
     load();
   };
 
+  // No email/SMS infra yet — WhatsApp is already the club's channel (see
+  // the "we'll ping you on WhatsApp" copy elsewhere), so the pragmatic
+  // notification path is a one-click pre-filled message the organizer
+  // sends themselves, rather than building automated messaging.
+  const WHATSAPP_MESSAGES = {
+    confirmed: (name) => `Hey ${name}! You're confirmed for Hybrid Sports Club 🎉 Welcome to the crew — see you Saturday!`,
+    rejected: (name) => `Hey ${name}, thanks for your interest in Hybrid Sports Club. We're not able to confirm your membership right now — reach out if you have questions.`,
+    pending_verification: (name) => `Hey ${name}, thanks for signing up for Hybrid Sports Club! We're reviewing your application and will confirm you soon.`,
+  };
+  const whatsappLink = (m) => {
+    const digits = m.phone.replace(/\D/g, "");
+    const msg = (WHATSAPP_MESSAGES[m.status] || WHATSAPP_MESSAGES.pending_verification)(m.name.split(" ")[0]);
+    return `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`;
+  };
+
   if (members == null) {
     return <div style={{ padding: 40, textAlign: "center", color: "var(--text-tertiary-light)" }}>Loading…</div>;
   }
@@ -62,6 +77,12 @@ function MembersPanel() {
                 background: m.status === "confirmed" ? "var(--green-100)" : m.status === "rejected" ? "var(--paper-200)" : "var(--yellow-100)",
                 color: m.status === "confirmed" ? "var(--green-700)" : m.status === "rejected" ? "var(--text-tertiary-light)" : "#8a6a00",
               }}>{m.status.replace("_", " ")}</span>
+              {m.phone && !m.phone.startsWith("auth:") &&
+                <a href={whatsappLink(m)} target="_blank" rel="noreferrer" title="Message on WhatsApp" style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 30,
+                  borderRadius: "var(--radius-full)", background: "var(--green-100)", color: "var(--green-700)",
+                }}><Icon name="message-circle" size={15} /></a>
+              }
               {m.status !== "confirmed" &&
                 <button disabled={busy === m.id} onClick={() => setStatus(m.id, "confirmed")} style={{ border: "none", cursor: "pointer", padding: "6px 12px", borderRadius: "var(--radius-full)", background: "var(--green-500)", color: "#fff", font: "var(--text-label-sm)", fontWeight: 700 }}>Confirm</button>
               }

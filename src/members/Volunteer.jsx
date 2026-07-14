@@ -119,6 +119,66 @@ function RolePicker({ event, roles, role, onRole, onBack, onSubmit }) {
   );
 }
 
+// volunteers.role is free text (matches event_volunteer_roles.role by
+// string, no FK) so the WhatsApp link for a confirmed application has to
+// be looked up by event_id + role text, not a clean embedded join.
+function MyVolunteerApps({ account }) {
+  const [apps, setApps] = React.useState(null);
+
+  const load = React.useCallback(async () => {
+    const { data: rows, error } = await window.sb.from("volunteers")
+      .select("id, role, status, event_id, events ( title )")
+      .eq("member_id", account.id).order("created_at", { ascending: false });
+    if (error) { console.error(error); setApps([]); return; }
+
+    const confirmed = (rows || []).filter((r) => r.status === "confirmed");
+    const linkMap = {};
+    if (confirmed.length) {
+      const eventIds = Array.from(new Set(confirmed.map((r) => r.event_id)));
+      const { data: roleRows } = await window.sb.from("event_volunteer_roles")
+        .select("event_id, role, whatsapp_link").in("event_id", eventIds);
+      (roleRows || []).forEach((rr) => { linkMap[rr.event_id + "::" + rr.role] = rr.whatsapp_link; });
+    }
+
+    setApps((rows || []).map((r) => ({
+      id: r.id, role: r.role, status: r.status, eventName: r.events ? r.events.title : "",
+      whatsappLink: linkMap[r.event_id + "::" + r.role] || null,
+    })));
+  }, [account.id]);
+
+  React.useEffect(() => { load(); }, [load]);
+
+  if (!apps || apps.length === 0) return null;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
+      <div style={{ font: "var(--text-label-md)", color: "var(--navy-300)" }}>Your crew applications</div>
+      {apps.map((a) => (
+        <div key={a.id} style={{
+          background: "var(--navy-800)", border: "1px solid " + (a.status === "confirmed" ? "var(--accent-primary)" : "var(--border-subtle-dark)"),
+          borderRadius: "var(--radius-md)", padding: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap",
+        }}>
+          <div>
+            <div style={{ font: "var(--text-title-md)", color: "#fff" }}>{a.role}</div>
+            <div style={{ font: "var(--text-body-sm)", color: "var(--navy-300)" }}>{a.eventName}</div>
+          </div>
+          {a.status === "confirmed" ? (
+            a.whatsappLink ? (
+              <a href={a.whatsappLink} target="_blank" rel="noreferrer" className="btn-pill">
+                <window.DS.Button variant="primary" size="sm" icon={<Icon name="message-circle" size={15} />} style={{ borderRadius: "var(--radius-full)" }}>Join WhatsApp group</window.DS.Button>
+              </a>
+            ) : (
+              <span style={{ font: "var(--text-label-sm)", color: "var(--navy-300)" }}>Confirmed — group link coming soon</span>
+            )
+          ) : (
+            <span style={{ font: "var(--text-label-sm)", padding: "5px 12px", borderRadius: "var(--radius-full)", background: "var(--orange-400)", color: "var(--navy-950)" }}>Pending</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function MembersVolunteer({ account, desktop }) {
   const allEvents = window.useSupaEvents();
   const [event, setEvent] = React.useState(null);
@@ -204,6 +264,7 @@ function MembersVolunteer({ account, desktop }) {
 
   return wrap(
     <div>
+      <MyVolunteerApps account={account} />
       {intro}
       <div style={{ marginTop: 20 }}>
         {!event

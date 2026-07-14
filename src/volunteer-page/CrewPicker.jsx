@@ -8,12 +8,34 @@ function CrewPicker({ member, event }) {
   const [toast, setToast] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [err, setErr] = React.useState({});
+  const [myApp, setMyApp] = React.useState(undefined); // undefined = loading, null = none yet, row = existing
 
   React.useEffect(() => {
     let cancelled = false;
     window.fetchVolunteerRoles(event.dbId).then((r) => { if (!cancelled) setRoles(r); });
     return () => { cancelled = true; };
   }, [event.dbId]);
+
+  // volunteers.role is free text (matches event_volunteer_roles.role by
+  // string, no FK), so the confirmed WhatsApp link is looked up by
+  // event_id + role text rather than an embedded join.
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await window.sb.from("volunteers")
+        .select("id, role, status").eq("event_id", event.dbId).eq("member_id", member.id)
+        .order("created_at", { ascending: false }).limit(1);
+      if (cancelled) return;
+      if (error || !data || !data.length) { setMyApp(null); return; }
+      const app = data[0];
+      if (app.status !== "confirmed") { setMyApp(app); return; }
+      const { data: roleRow } = await window.sb.from("event_volunteer_roles")
+        .select("whatsapp_link").eq("event_id", event.dbId).eq("role", app.role).maybeSingle();
+      if (cancelled) return;
+      setMyApp({ ...app, whatsappLink: roleRow ? roleRow.whatsapp_link : null });
+    })();
+    return () => { cancelled = true; };
+  }, [event.dbId, member.id]);
 
   const submit = async () => {
     const e = {};
@@ -33,8 +55,42 @@ function CrewPicker({ member, event }) {
     setTimeout(() => setToast(false), 3200);
   };
 
-  if (roles == null) {
+  if (roles == null || myApp === undefined) {
     return <p style={{ textAlign: "center", color: "var(--navy-300)" }}>Loading crew roles…</p>;
+  }
+
+  if (myApp && !done) {
+    return (
+      <div className="reveal in" style={{
+        background: "var(--navy-800)", border: "1px solid " + (myApp.status === "confirmed" ? "var(--accent-primary)" : "var(--border-subtle-dark)"),
+        borderRadius: "var(--radius-lg)", padding: 24, display: "flex", gap: 16, alignItems: "center", maxWidth: 640, margin: "0 auto", flexWrap: "wrap",
+      }}>
+        <div style={{
+          flexShrink: 0, width: 52, height: 52, borderRadius: "var(--radius-full)",
+          background: myApp.status === "confirmed" ? "var(--green-400)" : "var(--orange-400)", color: "var(--navy-950)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}><Icon name={myApp.status === "confirmed" ? "check" : "hourglass"} size={26} /></div>
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div style={{ font: "var(--text-title-lg)", color: "#fff" }}>
+            {myApp.status === "confirmed"
+              ? `You're confirmed for the ${myApp.role} crew.`
+              : `You're signed up for the ${myApp.role} crew — pending confirmation.`}
+          </div>
+          <div style={{ font: "var(--text-body-md)", color: "var(--navy-200)" }}>
+            {myApp.status === "confirmed" ? "See you there!" : "An organizer will confirm you, then we'll WhatsApp you the plan."}
+          </div>
+        </div>
+        {myApp.status === "confirmed" && (
+          myApp.whatsappLink ? (
+            <a href={myApp.whatsappLink} target="_blank" rel="noreferrer" className="btn-pill">
+              <Button variant="primary" size="md" icon={<Icon name="message-circle" size={16} />} style={{ borderRadius: "var(--radius-full)" }}>Join WhatsApp group</Button>
+            </a>
+          ) : (
+            <span style={{ font: "var(--text-label-sm)", color: "var(--navy-300)" }}>Group link coming soon</span>
+          )
+        )}
+      </div>
+    );
   }
 
   if (done) {

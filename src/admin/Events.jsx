@@ -55,7 +55,7 @@ function EventDetail({ event, rsvps, setRsvps, volunteers, setVolunteers, sponso
     label: role, count: scopedVolunteers.filter((v) => v.role === role).length,
   }));
 
-  const tabs = [["overview", "Overview"], ["rsvps", "RSVPs"], ["volunteers", "Volunteers"], ["sponsors", "Sponsors"]];
+  const tabs = [["overview", "Overview"], ["rsvps", "RSVPs"], ["volunteers", "Volunteers"], ["roles", "Roles"], ["sponsors", "Sponsors"]];
 
   return (
     <div>
@@ -105,6 +105,7 @@ function EventDetail({ event, rsvps, setRsvps, volunteers, setVolunteers, sponso
       )}
       {tab === "rsvps" && <window.RsvpsPanel rsvps={rsvps} setRsvps={setRsvps} eventName={event.name} />}
       {tab === "volunteers" && <window.VolunteersPanel volunteers={volunteers} setVolunteers={setVolunteers} eventName={event.name} />}
+      {tab === "roles" && <window.RolesPanel eventId={event.dbId} />}
       {tab === "sponsors" && <window.SponsorsAdminPanel sponsors={sponsors} setSponsors={setSponsors} eventName={event.name} />}
     </div>
   );
