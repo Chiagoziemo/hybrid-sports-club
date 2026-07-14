@@ -27,7 +27,31 @@
   .kicker { font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; display: inline-block; }
   .page-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 4vw, 44px); line-height: 1; letter-spacing: -0.03em; color: var(--navy-900); margin: 0 0 6px; }
   .pillbtn { border-radius: var(--radius-full) !important; }
-  @media (max-width: 1000px) { .admin-grid { grid-template-columns: repeat(2, 1fr) !important; } }</style>
+  @media (max-width: 1000px) { .admin-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 560px) { .admin-grid { grid-template-columns: 1fr !important; } }
+
+  /* mobile sidebar drawer */
+  .admin-sidebar { position: fixed; top: 0; left: 0; z-index: 100; transform: translateX(-100%); transition: transform var(--duration-base) var(--ease-out); }
+  .admin-sidebar.open { transform: translateX(0); }
+  .admin-overlay { position: fixed; inset: 0; background: rgba(5,7,13,0.55); z-index: 99; opacity: 0; pointer-events: none; transition: opacity var(--duration-base) var(--ease-out); }
+  .admin-overlay.show { opacity: 1; pointer-events: auto; }
+  .admin-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--navy-950); position: sticky; top: 0; z-index: 90; }
+  .admin-main { padding: 20px 16px; }
+  .admin-sidebar-close { display: flex !important; align-items: center; justify-content: center; }
+  @media (min-width: 900px) {
+    .admin-sidebar { position: sticky; transform: none !important; }
+    .admin-overlay { display: none !important; }
+    .admin-topbar { display: none !important; }
+    .admin-main { padding: 36px 40px; }
+    .admin-sidebar-close { display: none !important; }
+  }
+
+  /* fixed-column data tables — scroll horizontally instead of blowing out the page */
+  .admin-table-scroll { overflow-x: auto; }
+  .admin-table-row { min-width: 640px; }
+
+  .barlist-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 28px; }
+  @media (min-width: 640px) { .barlist-row { grid-template-columns: 230px 1fr 28px; } }</style>
 </head>
 <body>
 <div id="root"></div>

@@ -129,7 +129,13 @@
 
   /* nav */
   .nav-links { display: none; }
-  @media (min-width: 900px) { .nav-links { display: flex; gap: 24px; align-items: center; } }
+  .nav-hamburger { display: flex !important; }
+  .nav-mobile-menu { display: flex; }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-hamburger { display: none !important; }
+    .nav-mobile-menu { display: none !important; }
+  }
 
   /* generic responsive grids */
   .grid { display: grid; gap: 18px; }
@@ -143,12 +149,13 @@
   }
 
   /* asymmetric two-column layouts — single column until there's room for the wider track's minimum */
-  .grid-benefits, .grid-about-stat, .grid-events, .grid-join { grid-template-columns: minmax(0, 1fr); }
+  .grid-benefits, .grid-about-stat, .grid-events, .grid-join, .grid-testimonials { grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 720px) {
     .grid-benefits { grid-template-columns: minmax(280px, 440px) minmax(0, 1fr); }
     .grid-about-stat { grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); }
     .grid-events { grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); }
     .grid-join { grid-template-columns: 1.05fr 0.95fr; }
+    .grid-testimonials { grid-template-columns: 1.15fr 0.85fr; }
   }
 
   /* countdown — big bold numerals, no cage */

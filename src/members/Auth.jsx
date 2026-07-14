@@ -105,7 +105,7 @@ function SignupScreen({ onResolved }) {
     setBusy(false);
   };
   return (
-    <AuthShell kicker="Join the crew" title="Set up your account" subtitle="Phone keeps you in the community; email is how you log in.">
+    <AuthShell kicker="Join the crew" title="Set up your account" subtitle="We'll use your phone number to add you to the WhatsApp community, and this email to log you in from now on.">
       <div style={{ maxWidth: 360, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
         <Input label="Full name" placeholder="e.g. Ada Obi" value={name} onChange={(e) => { setName(e.target.value); setErr((p) => ({ ...p, name: "" })); }} error={err.name} />
         <Input label="Phone / WhatsApp number" placeholder="+234 800 000 0000" value={phone} onChange={(e) => { setPhone(e.target.value); setErr((p) => ({ ...p, phone: "" })); }}

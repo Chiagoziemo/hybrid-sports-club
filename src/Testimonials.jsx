@@ -15,7 +15,7 @@ function Testimonials() {
           </p>
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: "1.15fr 0.85fr", gap: 20, alignItems: "stretch" }}>
+        <div className="grid grid-testimonials" style={{ gap: 20, alignItems: "stretch" }}>
           {/* Lead quote over photo */}
           <figure className="reveal" style={{ margin: 0, position: "relative", borderRadius: "var(--radius-lg)", overflow: "hidden", minHeight: 340, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: 30, boxShadow: "var(--shadow-lg)", background: `linear-gradient(to top, rgba(5,7,13,0.94) 8%, rgba(5,7,13,0.3) 60%, rgba(5,7,13,0.05) 100%), url(assets/photography/group-lie-down-stretch.jpeg) center/cover` }}>
             <Icon name="quote" size={34} style={{ color: "var(--green-400)", marginBottom: 12 }} />

@@ -38,7 +38,8 @@ function RsvpsPanel({ rsvps, setRsvps, eventName }) {
         background: "var(--paper-0)", border: "1px solid var(--border-subtle-light)",
         borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)",
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1.4fr 0.8fr 1.4fr 1fr", padding: "12px 20px", background: "var(--paper-100)", borderBottom: "1px solid var(--border-subtle-light)" }}>
+        <div className="admin-table-scroll">
+        <div className="admin-table-row" style={{ display: "grid", gridTemplateColumns: "2fr 1.4fr 0.8fr 1.4fr 1fr", padding: "12px 20px", background: "var(--paper-100)", borderBottom: "1px solid var(--border-subtle-light)" }}>
           {cols.map(([key, label]) => (
             <button key={key} onClick={() => toggleSort(key)} style={{
               display: "flex", alignItems: "center", gap: 4, border: "none", background: "none", cursor: "pointer",
@@ -51,7 +52,7 @@ function RsvpsPanel({ rsvps, setRsvps, eventName }) {
           <div style={{ font: "var(--text-label-md)", color: "var(--text-secondary-light)" }}>Checked in</div>
         </div>
         {rows.map((r, i) => (
-          <div key={r.id || r.name + i} style={{
+          <div key={r.id || r.name + i} className="admin-table-row" style={{
             display: "grid", gridTemplateColumns: "2fr 1.4fr 0.8fr 1.4fr 1fr", padding: "14px 20px",
             borderBottom: "1px solid var(--border-subtle-light)", alignItems: "center",
           }}>
@@ -65,6 +66,7 @@ function RsvpsPanel({ rsvps, setRsvps, eventName }) {
             </div>
           </div>
         ))}
+        </div>
         {rows.length === 0 && (
           <div style={{ padding: 28, textAlign: "center", color: "var(--text-tertiary-light)", font: "var(--text-body-md)" }}>No RSVPs yet.</div>
         )}

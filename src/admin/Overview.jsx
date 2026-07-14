@@ -23,7 +23,7 @@ function BarList({ rows, empty }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {rows.map((r) => (
-        <div key={r.label} style={{ display: "grid", gridTemplateColumns: "230px 1fr 28px", gap: 12, alignItems: "center" }}>
+        <div key={r.label} className="barlist-row" style={{ display: "grid", gap: 12, alignItems: "center" }}>
           <div style={{ font: "var(--text-body-sm)", color: "var(--navy-800)" }}>{r.label}</div>
           <div style={{ background: "var(--paper-100)", borderRadius: "var(--radius-full)", height: 10, overflow: "hidden" }}>
             <div style={{

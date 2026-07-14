@@ -1,6 +1,7 @@
-/* global React, ReactDOM */
+/* global React, ReactDOM, Icon */
 function AdminApp() {
   const [screen, setScreen] = React.useState("overview");
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [session, setSession] = React.useState(undefined); // undefined = checking, null = logged out
   const [authError, setAuthError] = React.useState("");
   const [authBusy, setAuthBusy] = React.useState(false);
@@ -84,9 +85,17 @@ function AdminApp() {
   const { Sidebar } = window;
   return (
     <div style={{ display: "flex", minHeight: "100vh", position: "relative", background: "var(--bg-site)" }}>
-      <Sidebar screen={screen} setScreen={setScreen} onLogout={logout} />
-      <main style={{ flex: 1, padding: "36px 40px", minWidth: 0 }}>
-        <div style={{ maxWidth: 1100 }}>
+      <div className={"admin-overlay" + (sidebarOpen ? " show" : "")} onClick={() => setSidebarOpen(false)} />
+      <Sidebar screen={screen} setScreen={setScreen} onLogout={logout} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+        <div className="admin-topbar">
+          <window.Logo height={26} dark />
+          <button onClick={() => setSidebarOpen(true)} aria-label="Open menu" style={{ border: "none", background: "none", cursor: "pointer", color: "#fff", padding: 4 }}>
+            <Icon name="menu" size={22} />
+          </button>
+        </div>
+        <main className="admin-main" style={{ flex: 1 }}>
+          <div style={{ maxWidth: 1100 }}>
           {screen === "overview" && <window.Overview />}
           {screen === "members" && <window.MembersPanel />}
           {screen === "events" && (
@@ -97,8 +106,9 @@ function AdminApp() {
             />
           )}
           {screen === "calendar" && <window.CalendarScreen events={events} />}
-        </div>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>);
 
 }

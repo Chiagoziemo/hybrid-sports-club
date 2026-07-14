@@ -38,7 +38,7 @@ function EditSheet({ event, onClose, onSave }) {
 
 function CalendarRow({ e, onEdit }) {
   return (
-    <div style={{
+    <div className="admin-table-row" style={{
       display: "grid", gridTemplateColumns: "2fr 2fr 1.6fr 0.8fr", alignItems: "center",
       padding: "14px 20px", borderBottom: "1px solid var(--border-subtle-light)",
     }}>
@@ -95,12 +95,14 @@ function Calendar({ events }) {
         background: "var(--paper-0)", border: "1px solid var(--border-subtle-light)",
         borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)",
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.6fr 0.8fr", padding: "12px 20px", background: "var(--paper-100)", borderBottom: "1px solid var(--border-subtle-light)" }}>
+        <div className="admin-table-scroll">
+        <div className="admin-table-row" style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.6fr 0.8fr", padding: "12px 20px", background: "var(--paper-100)", borderBottom: "1px solid var(--border-subtle-light)" }}>
           {["Event", "Schedule", "Location", ""].map((h) => (
             <div key={h} style={{ font: "var(--text-label-md)", color: "var(--text-secondary-light)" }}>{h}</div>
           ))}
         </div>
         {events.map((e) => <CalendarRow key={e.id} e={e} onEdit={setEditing} />)}
+        </div>
       </div>
 
       <EditSheet event={editing} onClose={() => setEditing(null)} onSave={save} />
