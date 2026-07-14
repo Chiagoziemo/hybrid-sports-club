@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hybrid Sports Club — One-Year Anniversary Festival</title>
+
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/base.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/styles.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="src/supabaseClient.js"></script>
+
+<style>
+  :root { --maxw: 1200px; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper-50); color: var(--navy-900); font-family: var(--font-body); }
+  * { box-sizing: border-box; }
+  img { display: block; }
+  a { color: var(--green-700); text-decoration: none; }
+  a:hover { color: var(--green-600); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .section { padding: 78px 0; }
+  @media (min-width: 780px) { .section { padding: 108px 0; } }
+
+  .nkicker { display: inline-flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .nkicker .nk-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: var(--radius-full); background: var(--navy-950); color: var(--green-400); font-size: 11px; letter-spacing: 0; }
+  .kicker-plain { font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  .blk-paper  { background: var(--paper-50);  color: var(--navy-900); }
+  .blk-paper2 { background: var(--paper-100); color: var(--navy-900); }
+  .blk-green  { background: var(--green-400); color: var(--navy-950); }
+  .blk-navy   { background: var(--navy-950);  color: var(--paper-50); }
+  .dark { background: var(--navy-950); color: var(--paper-50); }
+
+  .d-huge { font-family: var(--font-display); font-weight: 800; font-size: clamp(42px, 8vw, 100px); line-height: 0.94; letter-spacing: -0.035em; margin: 0; text-wrap: balance; }
+  .d-big { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5vw, 60px); line-height: 1; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+  .lede { font: var(--text-body-lg); font-size: clamp(17px, 1.7vw, 21px); line-height: 1.55; }
+
+  .btn-pill > button, button.btn-pill { border-radius: var(--radius-full) !important; }
+
+  .avatar-stack { display: inline-flex; align-items: center; }
+  .avatar-stack > * { margin-left: -12px; box-shadow: 0 0 0 3px var(--navy-950); border-radius: var(--radius-full); }
+  .avatar-stack > *:first-child { margin-left: 0; }
+
+  .benefit-ico { width: 44px; height: 44px; border-radius: var(--radius-md); flex-shrink: 0; background: var(--navy-950); color: var(--green-400); display: flex; align-items: center; justify-content: center; }
+
+  .grid { display: grid; gap: 18px; }
+  .cols-2 { grid-template-columns: minmax(0, 1fr); }
+  .cols-3 { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 720px) { .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  .cd { display: flex; gap: 28px; flex-wrap: wrap; }
+  .cd-cell { text-align: left; }
+  .cd-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 68px); line-height: 0.9; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .cd-lab { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 6px; opacity: 0.7; }
+
+  .meta-chip { display: inline-flex; align-items: center; gap: 8px; font: var(--text-label-md); font-weight: 700; color: #fff; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.24); padding: 8px 16px; border-radius: var(--radius-full); backdrop-filter: blur(6px); }
+
+  .timeline { display: flex; flex-direction: column; }
+  .tl-row { display: grid; grid-template-columns: 84px 24px 1fr; gap: 8px; }
+  @media (min-width: 640px) { .tl-row { grid-template-columns: 120px 24px 1fr; } }
+  .tl-time { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--green-400); padding-top: 2px; }
+  .tl-rail { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--green-400); flex-shrink: 0; margin-top: 4px; }
+  .tl-line { width: 2px; flex: 1; background: var(--border-subtle-dark); margin: 4px 0; }
+  .tl-body { padding-bottom: 32px; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="src/helpers.jsx"></script>
+<script type="text/babel" src="src/data.jsx"></script>
+<script type="text/babel" src="src/Logo.jsx"></script>
+<script type="text/babel" src="src/SiteFooter.jsx"></script>
+<script type="text/babel" src="src/festival/data.jsx"></script>
+<script type="text/babel" src="src/festival/Header.jsx"></script>
+<script type="text/babel" src="src/festival/FestivalHero.jsx"></script>
+<script type="text/babel" src="src/festival/Highlights.jsx"></script>
+<script type="text/babel" src="src/festival/Itinerary.jsx"></script>
+<script type="text/babel" src="src/festival/RegisterForm.jsx"></script>
+<script type="text/babel" src="src/festival/Partner.jsx"></script>
+<script type="text/babel" src="src/festival/Support.jsx"></script>
+<script type="text/babel" src="src/festival/app.jsx"></script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#05070d"/>
+  <circle cx="50" cy="34" r="9" fill="#3ddc7a"/>
+  <path d="M35 78 Q50 52 65 78" stroke="#ff7a3d" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <rect x="30" y="62" width="40" height="7" rx="3.5" fill="#3ddc7a"/>
+</svg>
+</template>
+</body>
+</html>

@@ -1,0 +1,11 @@
+/* Hybrid Sports Club — base resets shared by every surface */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: var(--text-body-md);
+  background: var(--bg-app);
+  color: var(--text-primary-dark);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent-primary); text-decoration: none; }
+a:hover { color: var(--accent-primary-hover); text-decoration: underline; }

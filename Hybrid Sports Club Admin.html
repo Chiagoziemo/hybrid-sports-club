@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hybrid Sports Club — Organizer Dashboard</title>
+
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/base.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/styles.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="src/supabaseClient.js"></script>
+
+<style>
+  body { margin: 0; background: var(--bg-site); font-family: var(--font-body); }
+  * { box-sizing: border-box; }
+  img { display: block; }
+  .admin-grid { display: grid; }
+  .kicker { font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; display: inline-block; }
+  .page-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 4vw, 44px); line-height: 1; letter-spacing: -0.03em; color: var(--navy-900); margin: 0 0 6px; }
+  .pillbtn { border-radius: var(--radius-full) !important; }
+  @media (max-width: 1000px) { .admin-grid { grid-template-columns: repeat(2, 1fr) !important; } }</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="src/helpers.jsx"></script>
+<script type="text/babel" src="src/data.jsx"></script>
+<script type="text/babel" src="src/Logo.jsx"></script>
+<script type="text/babel" src="src/admin/data.jsx"></script>
+<script type="text/babel" src="src/admin/Login.jsx"></script>
+<script type="text/babel" src="src/admin/Sidebar.jsx"></script>
+<script type="text/babel" src="src/admin/Overview.jsx"></script>
+<script type="text/babel" src="src/admin/Members.jsx"></script>
+<script type="text/babel" src="src/admin/Rsvps.jsx"></script>
+<script type="text/babel" src="src/admin/Volunteers.jsx"></script>
+<script type="text/babel" src="src/admin/Sponsors.jsx"></script>
+<script type="text/babel" src="src/admin/Events.jsx"></script>
+<script type="text/babel" src="src/admin/Calendar.jsx"></script>
+<script type="text/babel" src="src/admin/app.jsx"></script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#05070d"/>
+  <rect x="14" y="14" width="24" height="72" rx="4" fill="#101830"/>
+  <rect x="46" y="20" width="40" height="16" rx="3" fill="#3ddc7a"/>
+  <rect x="46" y="42" width="40" height="10" rx="3" fill="#182347"/>
+  <rect x="46" y="58" width="40" height="10" rx="3" fill="#182347"/>
+</svg>
+</template>
+</body>
+</html>

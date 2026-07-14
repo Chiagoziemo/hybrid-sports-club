@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Hybrid Sports Club — Color tokens
+   Base palette pulled from brand logo (deep navy) + the club's own event
+   photography: turf green, sunrise orange, sand, open sky. No color system
+   was supplied with the brand — this palette is a considered extrapolation,
+   confirmed with the user (navy base + green/orange dual accent).
+   ========================================================================== */
+:root {
+  /* ---- Base: Navy (brand primary, from logo) ---- */
+  --navy-950: #05070d;
+  --navy-900: #0a0f1c;
+  --navy-800: #101830;
+  --navy-700: #182347;
+  --navy-600: #223060;
+  --navy-500: #324880;
+  --navy-400: #5a70a3;
+  --navy-300: #8b9cc4;
+  --navy-200: #c2cbe3;
+  --navy-100: #e4e8f5;
+  --navy-50:  #f4f6fc;
+
+  /* ---- Accent: Turf Green (energy, go, community) ---- */
+  --green-700: #0f7a41;
+  --green-600: #17974f;
+  --green-500: #22b85f;
+  --green-400: #3ddc7a;
+  --green-300: #7bec9f;
+  --green-200: #baf5cd;
+  --green-100: #e3fbea;
+
+  /* ---- Accent: Sunrise Orange (heat, motion, Saturdays) ---- */
+  --orange-700: #b8420f;
+  --orange-600: #d8531a;
+  --orange-500: #f26522;
+  --orange-400: #ff7a3d;
+  --orange-300: #ffa06e;
+  --orange-200: #ffcbab;
+  --orange-100: #ffe9dc;
+
+  /* ---- Accent: Sun Yellow (used sparingly — highlights, tags) ---- */
+  --yellow-500: #f2b705;
+  --yellow-400: #ffd23d;
+  --yellow-300: #ffe285;
+  --yellow-100: #fff6d9;
+
+  /* ---- Neutrals: warm paper, not stark white (outdoor/community, not clinical) ---- */
+  --paper-0:   #ffffff;
+  --paper-50:  #fbf9f4;
+  --paper-100: #f4f1e8;
+  --paper-200: #e9e4d6;
+  --paper-300: #d6cfba;
+  --paper-400: #b3a98d;
+
+  /* ---- Status ---- */
+  --red-500: #e5484d;
+  --blue-500: #2e9eff;
+
+  /* ================= Semantic aliases ================= */
+  /* App is dark-first (navy) per brand; site/marketing skews paper/light. */
+  --bg-app: var(--navy-950);
+  --bg-app-elevated: var(--navy-800);
+  --bg-site: var(--paper-50);
+  --bg-site-elevated: var(--paper-0);
+
+  --surface-card-dark: var(--navy-800);
+  --surface-card-light: var(--paper-0);
+  --surface-sunken-dark: var(--navy-900);
+  --surface-sunken-light: var(--paper-100);
+
+  --text-primary-dark: var(--paper-50);
+  --text-secondary-dark: var(--navy-200);
+  --text-tertiary-dark: var(--navy-400);
+
+  --text-primary-light: var(--navy-900);
+  --text-secondary-light: var(--navy-600);
+  --text-tertiary-light: var(--navy-400);
+
+  --text-on-accent: var(--navy-950);
+  --text-on-accent-inverse: #ffffff;
+
+  --accent-primary: var(--green-400);
+  --accent-primary-strong: var(--green-500);
+  --accent-primary-hover: var(--green-300);
+  --accent-secondary: var(--orange-400);
+  --accent-secondary-strong: var(--orange-500);
+  --accent-secondary-hover: var(--orange-300);
+  --accent-tertiary: var(--yellow-400);
+
+  --border-subtle-dark: rgba(228, 232, 245, 0.10);
+  --border-default-dark: rgba(228, 232, 245, 0.18);
+  --border-subtle-light: rgba(10, 15, 28, 0.08);
+  --border-default-light: rgba(10, 15, 28, 0.14);
+
+  --focus-ring: var(--green-400);
+  --danger: var(--red-500);
+  --info: var(--blue-500);
+
+  --overlay-scrim: rgba(5, 7, 13, 0.6);
+}

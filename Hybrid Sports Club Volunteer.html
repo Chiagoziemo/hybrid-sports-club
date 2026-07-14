@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hybrid Sports Club — Volunteer</title>
+
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/base.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/styles.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="src/supabaseClient.js"></script>
+
+<style>
+  :root { --maxw: 1160px; }
+  body { margin: 0; background: var(--bg-site); color: var(--text-primary-light); font-family: var(--font-body); }
+  * { box-sizing: border-box; }
+  img { display: block; }
+  a { color: var(--green-600); text-decoration: none; }
+  a:hover { color: var(--green-500); }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  .dark { background: var(--navy-950); color: var(--text-primary-dark); }
+  .dark .kicker { color: var(--accent-primary); }
+  .kicker { font: var(--text-label-sm); letter-spacing: var(--tracking-wide-label); text-transform: uppercase; }
+  .grid { display: grid; gap: 16px; }
+  .cols-2 { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px) { .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="src/helpers.jsx"></script>
+<script type="text/babel" src="src/data.jsx"></script>
+<script type="text/babel" src="src/Logo.jsx"></script>
+<script type="text/babel" src="src/JoinForm.jsx"></script>
+<script type="text/babel" src="src/volunteer-page/CrewPicker.jsx"></script>
+<script type="text/babel" src="src/volunteer-page/app.jsx"></script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#05070d"/>
+  <circle cx="50" cy="40" r="16" fill="#3ddc7a"/>
+  <rect x="30" y="66" width="40" height="10" rx="5" fill="#ff7a3d"/>
+</svg>
+</template>
+</body>
+</html>

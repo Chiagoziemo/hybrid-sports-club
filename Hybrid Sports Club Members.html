@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hybrid Sports Club — Members</title>
+
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/tokens/base.css">
+<link rel="stylesheet" href="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/styles.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="_ds/hybrid-sports-club-design-system-dd63ac44-5eb3-4c04-b8c0-eae28f1ae60b/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="src/supabaseClient.js"></script>
+
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--navy-950); font-family: var(--font-body); }
+  img { display: block; }
+  a { color: var(--green-400); text-decoration: none; }
+  a:hover { color: var(--green-300); }
+
+  .kicker { font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; display: inline-block; }
+  .screen-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 8.5vw, 40px); line-height: 0.98; letter-spacing: -0.03em; color: #fff; }
+  .pillbtn { border-radius: var(--radius-full) !important; }
+  .grid { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Mobile-first app shell — a fixed-width column that reads like a phone's
+     content area even on a wide desktop viewport, since this surface is
+     used almost exclusively on members' phones. */
+  html, body { height: 100%; }
+  .app-shell {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 100dvh;
+    margin: 0 auto;
+    background: var(--navy-950);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border-subtle-dark);
+  }
+  .app-scroll {
+    position: absolute; inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 481px) {
+    body { background: var(--navy-900); }
+    .app-shell { box-shadow: var(--shadow-lg), 0 0 0 1px var(--border-subtle-dark); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="src/helpers.jsx"></script>
+<script type="text/babel" src="src/data.jsx"></script>
+<script type="text/babel" src="src/Logo.jsx"></script>
+<script type="text/babel" src="src/members/data.jsx"></script>
+<script type="text/babel" src="src/members/Auth.jsx"></script>
+<script type="text/babel" src="src/members/BottomNav.jsx"></script>
+<script type="text/babel" src="src/members/Shell.jsx"></script>
+<script type="text/babel" src="src/members/Leaderboard.jsx"></script>
+<script type="text/babel" src="src/members/Dashboard.jsx"></script>
+<script type="text/babel" src="src/members/EventsList.jsx"></script>
+<script type="text/babel" src="src/members/ShareCard.jsx"></script>
+<script type="text/babel" src="src/members/Volunteer.jsx"></script>
+<script type="text/babel" src="src/members/Profile.jsx"></script>
+<script type="text/babel" src="src/members/CheckinHistory.jsx"></script>
+<script type="text/babel" src="src/members/app.jsx"></script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#05070d"/>
+  <circle cx="50" cy="38" r="17" fill="#3ddc7a"/>
+  <rect x="34" y="66" width="32" height="9" rx="4.5" fill="#ff7a3d"/>
+</svg>
+</template>
+</body>
+</html>
