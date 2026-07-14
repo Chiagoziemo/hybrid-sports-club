@@ -36,10 +36,10 @@ function EditSheet({ event, onClose, onSave }) {
   );
 }
 
-function CalendarRow({ e, onEdit }) {
+function CalendarRow({ e, onEdit, onDelete }) {
   return (
     <div className="admin-table-row" style={{
-      display: "grid", gridTemplateColumns: "2fr 2fr 1.6fr 0.8fr", alignItems: "center",
+      display: "grid", gridTemplateColumns: "2fr 2fr 1.6fr 1.1fr", alignItems: "center",
       padding: "14px 20px", borderBottom: "1px solid var(--border-subtle-light)",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -48,11 +48,15 @@ function CalendarRow({ e, onEdit }) {
       </div>
       <div style={{ font: "var(--text-body-sm)", color: "var(--text-secondary-light)" }}>{e.cadence}</div>
       <div style={{ font: "var(--text-body-sm)", color: "var(--text-secondary-light)" }}>{e.place}</div>
-      <div>
+      <div style={{ display: "flex", gap: 14 }}>
         <button onClick={() => onEdit(e)} style={{
           font: "var(--text-label-md)", color: "var(--green-700)", border: "none", background: "none", cursor: "pointer",
           display: "flex", alignItems: "center", gap: 6,
         }}><Icon name="pencil" size={14} />Edit</button>
+        <button onClick={() => onDelete(e)} style={{
+          font: "var(--text-label-md)", color: "var(--danger)", border: "none", background: "none", cursor: "pointer",
+          display: "flex", alignItems: "center", gap: 6,
+        }}><Icon name="trash-2" size={14} />Delete</button>
       </div>
     </div>
   );
@@ -82,6 +86,13 @@ function Calendar({ events }) {
     setEditing(null);
   };
 
+  const remove = async (e) => {
+    if (!window.confirm(`Delete "${e.name}"? This permanently removes all its RSVPs, check-ins, volunteer roles and signups, and sponsor associations. This can't be undone.`)) return;
+    const { error } = await window.sb.from("events").delete().eq("id", e.dbId);
+    if (error) { console.error(error); return; }
+    window.refreshEvents();
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 24 }}>
@@ -101,7 +112,7 @@ function Calendar({ events }) {
             <div key={h} style={{ font: "var(--text-label-md)", color: "var(--text-secondary-light)" }}>{h}</div>
           ))}
         </div>
-        {events.map((e) => <CalendarRow key={e.id} e={e} onEdit={setEditing} />)}
+        {events.map((e) => <CalendarRow key={e.id} e={e} onEdit={setEditing} onDelete={remove} />)}
         </div>
       </div>
 
