@@ -6,10 +6,15 @@ function SiteFooter() {
   { icon: "at-sign", label: "Instagram", handle: "@hybridsportsclub" },
   { icon: "message-circle", label: "WhatsApp", handle: "Join the community" }];
 
+  const contact = [
+  { icon: "mail", handle: "hybridsportsclubng@gmail.com", href: "mailto:hybridsportsclubng@gmail.com" },
+  { icon: "phone", handle: "+234 706 600 4746", href: "tel:+2347066004746" },
+  { icon: "map-pin", handle: "Lagos, Nigeria" }];
+
   return (
     <footer className="dark" style={{ borderTop: "1px solid var(--border-subtle-dark)" }}>
       <div className="wrap" style={{ padding: "48px 20px 40px" }}>
-        <div className="grid cols-2" style={{ gap: 32, alignItems: "flex-start" }}>
+        <div className="grid cols-3" style={{ gap: 32, alignItems: "flex-start" }}>
           <div>
             <window.Logo height={44} dark />
             <p style={{ font: "var(--text-body-md)", color: "var(--navy-200)", maxWidth: 340, marginTop: 16 }}>
@@ -31,6 +36,19 @@ function SiteFooter() {
                 </div>
               </div>
             )}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {contact.map((c) => {
+              const row = (
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  <Icon name={c.icon} size={17} style={{ color: "var(--accent-primary)" }} />
+                  <span style={{ font: "var(--text-body-md)", color: "var(--navy-200)" }}>{c.handle}</span>
+                </div>
+              );
+              return c.href
+                ? <a key={c.handle} href={c.href} style={{ color: "inherit" }}>{row}</a>
+                : <div key={c.handle}>{row}</div>;
+            })}
           </div>
         </div>
         <div style={{ borderTop: "1px solid var(--border-subtle-dark)", marginTop: 34, paddingTop: 20, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
