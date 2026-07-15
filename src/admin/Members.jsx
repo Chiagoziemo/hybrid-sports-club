@@ -173,9 +173,11 @@ function MembersPanel() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }}>
         <window.PageHead title="Members" subtitle="Approve new signups or manage the roster." />
-        <window.DS.Button variant="outline" size="md" className="pillbtn" icon={<Icon name="upload" size={16} />} onClick={() => setImporting(true)} style={{ marginBottom: 24 }}>
-          Import members
-        </window.DS.Button>
+        <button onClick={() => setImporting(true)} style={{
+          display: "flex", alignItems: "center", gap: 8, border: "1px solid var(--border-default-light)",
+          cursor: "pointer", padding: "9px 16px", borderRadius: "var(--radius-full)", background: "transparent",
+          color: "var(--navy-700)", font: "var(--text-label-md)", fontWeight: 700, marginBottom: 24,
+        }}><Icon name="upload" size={15} />Import members</button>
       </div>
       <div style={{ display: "flex", gap: 6, marginBottom: 18, flexWrap: "wrap" }}>
         {tabs.map(([key, label]) => (
