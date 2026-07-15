@@ -134,7 +134,7 @@ function Join() {
           <div className="reveal">
             {checking ? (
               <p style={{ textAlign: "center", color: "var(--navy-300)" }}>Loading…</p>
-            ) : member ? (
+            ) : member && !member.phone.startsWith("auth:") ? (
               <div style={{ background: "var(--navy-800)", border: "1px solid var(--accent-primary)", borderRadius: "var(--radius-lg)", padding: 28, textAlign: "center" }}>
                 <div style={{ width: 56, height: 56, borderRadius: "var(--radius-full)", margin: "0 auto 14px", background: "var(--green-400)", color: "var(--navy-950)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="check" size={28} /></div>
                 <div style={{ font: "var(--text-title-lg)", color: "#fff" }}>You're in, {member.name.split(" ")[0]}!</div>

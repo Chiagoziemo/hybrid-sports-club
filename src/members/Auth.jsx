@@ -87,30 +87,55 @@ function EmailOtpScreen({ email, onVerified, onBack }) {
 
 // Signup completion — member row already exists (ensure_member() created
 // it) but still has the placeholder phone, meaning complete_member_signup
-// hasn't run yet. Collect name + phone to finish it.
+// hasn't run yet. Collects the same profile as the public JoinForm
+// (minus email, which is already fixed by the auth session that got
+// them here) so a member gets asked the same questions regardless of
+// which door they came through.
 function SignupScreen({ onResolved }) {
-  const { Input, Button } = window.DS;
-  const [name, setName] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+  const { Input, Select, Button, Tag } = window.DS;
+  const [form, setForm] = React.useState({ name: "", phone: "", birthday: "", heard: window.HOW_HEARD[0], activities: [] });
   const [err, setErr] = React.useState({});
   const [busy, setBusy] = React.useState(false);
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const toggleActivity = (title) => setForm((f) => ({
+    ...f, activities: f.activities.includes(title) ? f.activities.filter((t) => t !== title) : [...f.activities, title],
+  }));
+
   const go = async () => {
     const e = {};
-    if (!name.trim()) e.name = "Add your name.";
-    if (!/[0-9]{7,}/.test(phone.replace(/\s/g, ""))) e.phone = "Add a valid WhatsApp number.";
+    if (!form.name.trim()) e.name = "Add your name.";
+    if (!/[0-9]{7,}/.test(form.phone.replace(/\s/g, ""))) e.phone = "Add a valid WhatsApp number.";
+    if (!form.activities.length) e.activities = "Pick at least one activity.";
     setErr(e);
     if (Object.keys(e).length) return;
     setBusy(true);
-    const result = await onResolved({ name: name.trim(), phone: phone.trim() });
+    const result = await onResolved({
+      name: form.name.trim(), phone: form.phone.trim(),
+      birthday: form.birthday, heard: form.heard, activities: form.activities,
+    });
     setBusy(false);
-    if (result && result.error) setErr({ submit: "Something went wrong — try again." });
+    if (result && result.error) setErr((p) => ({ ...p, submit: "Something went wrong — try again." }));
   };
+
   return (
     <AuthShell kicker="Join the crew" title="Set up your account" subtitle="We'll use your phone number to add you to the WhatsApp community, and this email to log you in from now on.">
       <div style={{ maxWidth: 360, margin: "0 auto", width: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
-        <Input label="Full name" placeholder="e.g. Ada Obi" value={name} onChange={(e) => { setName(e.target.value); setErr((p) => ({ ...p, name: "" })); }} error={err.name} />
-        <Input label="Phone / WhatsApp number" placeholder="+234 800 000 0000" value={phone} onChange={(e) => { setPhone(e.target.value); setErr((p) => ({ ...p, phone: "" })); }}
+        <Input label="Full name" placeholder="e.g. Ada Obi" value={form.name} onChange={(e) => { set("name")(e); setErr((p) => ({ ...p, name: "" })); }} error={err.name} />
+        <Input label="Phone / WhatsApp number" placeholder="+234 800 000 0000" value={form.phone} onChange={(e) => { set("phone")(e); setErr((p) => ({ ...p, phone: "" })); }}
           error={err.phone} icon={<Icon name="phone" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
+        <Input label="Birthday" placeholder="DD / MM" value={form.birthday} onChange={set("birthday")} icon={<Icon name="cake" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
+        <Select label="How did you hear about Hybrid?" value={form.heard} onChange={set("heard")} options={window.HOW_HEARD} />
+        <div>
+          <span style={{ font: "var(--text-label-md)", color: "var(--navy-200)", display: "block", marginBottom: 8 }}>
+            Which activities are you into?
+          </span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {window.ACTIVITIES.map((a) => (
+              <Tag key={a.title} selected={form.activities.includes(a.title)} onClick={() => toggleActivity(a.title)}>{a.title}</Tag>
+            ))}
+          </div>
+          {err.activities && <p style={{ font: "var(--text-body-sm)", color: "var(--danger)", margin: "6px 0 0" }}>{err.activities}</p>}
+        </div>
         {err.submit && <p style={{ font: "var(--text-body-sm)", color: "var(--danger)", margin: 0 }}>{err.submit}</p>}
         <Button variant="primary" size="lg" className="pillbtn" style={{ width: "100%" }} disabled={busy} onClick={go}>{busy ? "Saving…" : "Create my account"}</Button>
       </div>

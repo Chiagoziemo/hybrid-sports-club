@@ -92,9 +92,15 @@ function MembersApp() {
     setAuthStep("otp");
   };
 
-  const onSignupResolved = async ({ name, phone }) => {
+  const onSignupResolved = async ({ name, phone, birthday, heard, activities }) => {
     const { error } = await window.sb.rpc("complete_member_signup", { p_name: name, p_phone: phone });
     if (error) { console.error(error); return { error }; }
+    const { data: userData } = await window.sb.auth.getUser();
+    if (userData && userData.user) {
+      await window.sb.from("members").update({
+        birthday: birthday || null, heard_about: heard || null, interests: activities || [],
+      }).eq("auth_id", userData.user.id);
+    }
     await bootstrap();
     return { error: null };
   };

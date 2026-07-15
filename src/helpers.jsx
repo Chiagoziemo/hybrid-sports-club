@@ -100,6 +100,10 @@ const ACTIVITIES = [
   { title: "Social nights", icon: "utensils", blurb: "Potlucks, playlists, and slow hangs." },
 ];
 
+// Shared between the public JoinForm and the members-area SignupScreen —
+// both collect the same profile, just at different points in the flow.
+const HOW_HEARD = ["Instagram", "WhatsApp group", "A friend / member", "At an event", "Other"];
+
 const FEATURED = [
   { title: "Yoga & mobility", tag: "Wellness", photo: "session-yoga-pair", desc: "Slow morning flows on the grass to open up the week." },
   { title: "Archery", tag: "Precision", photo: "archery", desc: "Steady hands, quiet focus, real arrows downrange." },
@@ -236,7 +240,7 @@ function AddToCalendarButtons({ event, dark }) {
 Object.assign(window, {
   DS, Icon, NKicker, useCountdown, useReveal, openRsvpModal, PHOTO,
   CLUB, EVENT_FILTERS, ACTIVITIES, FEATURED, ROLES, SPONSORS, GALLERY,
-  GUEST_TYPES, FESTIVAL_ACTIVITIES, BANK,
+  GUEST_TYPES, FESTIVAL_ACTIVITIES, BANK, HOW_HEARD,
   HERO_STATS, BENEFITS, JOIN_STEPS, TICKER_TAGS, COLLABS, TESTIMONIALS,
   AddToCalendarButtons,
 });

@@ -1,9 +1,7 @@
 /* global React, DS, Icon, ACTIVITIES */
-const HOW_HEARD = ["Instagram", "WhatsApp group", "A friend / member", "At an event", "Other"];
-
 function JoinForm({ onJoined }) {
   const { Input, Select, Button, Tag } = window.DS;
-  const [form, setForm] = React.useState({ name: "", phone: "", email: "", heard: HOW_HEARD[0], birthday: "", activities: [] });
+  const [form, setForm] = React.useState({ name: "", phone: "", email: "", heard: window.HOW_HEARD[0], birthday: "", activities: [] });
   const [err, setErr] = React.useState({});
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const toggleActivity = (title) => setForm((f) => ({
@@ -32,7 +30,7 @@ function JoinForm({ onJoined }) {
       <Input label="Phone / WhatsApp" placeholder="+234 800 000 0000" value={form.phone} onChange={set("phone")} error={err.phone} icon={<Icon name="phone" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
       <Input label="Email" placeholder="you@email.com" value={form.email} onChange={set("email")} error={err.email} icon={<Icon name="mail" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
       <Input label="Birthday" placeholder="DD / MM" value={form.birthday} onChange={set("birthday")} icon={<Icon name="cake" size={16} style={{ color: "var(--text-tertiary-dark)" }} />} />
-      <Select label="How did you hear about Hybrid?" value={form.heard} onChange={set("heard")} options={HOW_HEARD} />
+      <Select label="How did you hear about Hybrid?" value={form.heard} onChange={set("heard")} options={window.HOW_HEARD} />
       <div>
         <span style={{ font: "var(--text-label-md)", color: "var(--text-secondary-dark)", display: "block", marginBottom: 8 }}>
           Which activities are you into?
