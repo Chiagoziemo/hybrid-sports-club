@@ -219,7 +219,7 @@ function MembersPanel() {
           </div>
         ))}
       </div>
-      <ImportMembersSheet open={importing} onClose={() => setImporting(false)} onImported={load} />
+      <ImportMembersSheet open={importing} onClose={() => setImporting(false)} onImported={() => { setFilter("all"); load(); }} />
     </div>
   );
 }

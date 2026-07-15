@@ -38,11 +38,46 @@ function mapEventRow(row) {
     place: row.location,
     tagline: row.description,
     desc: row.description,
+    date: row.date,
     target,
     photo: row.photo,
     cta: featured ? "RSVP for the festival" : undefined,
     volunteeringEnabled: !!row.volunteering_enabled,
   };
+}
+
+// "Add to calendar" links — only meaningful for events with a real
+// one-off date (row.date / target), not free-text recurring schedules
+// like "Weekly · Saturdays, 7:00–10:00am" which have no single instant
+// to point a calendar entry at. Assumes a 3-hour block, matching the
+// typical session length seen in existing schedule copy.
+function addToCalendarLinks(event) {
+  if (!event || !event.target) return null;
+  const start = new Date(event.target);
+  const end = new Date(event.target + 3 * 60 * 60 * 1000);
+  const fmt = (d) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const title = event.name || "";
+  const details = event.tagline || event.desc || "";
+  const location = event.place || "";
+
+  const google = "https://www.google.com/calendar/render?action=TEMPLATE"
+    + `&text=${encodeURIComponent(title)}`
+    + `&dates=${fmt(start)}/${fmt(end)}`
+    + `&details=${encodeURIComponent(details)}`
+    + `&location=${encodeURIComponent(location)}`;
+
+  const ics = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Hybrid Sports Club//EN", "BEGIN:VEVENT",
+    `UID:${event.dbId || event.id || Date.now()}@hybridsportsclub`,
+    `DTSTAMP:${fmt(new Date())}`, `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
+    `SUMMARY:${title.replace(/\r?\n/g, " ")}`,
+    `DESCRIPTION:${details.replace(/\r?\n/g, " ")}`,
+    `LOCATION:${location.replace(/\r?\n/g, " ")}`,
+    "END:VEVENT", "END:VCALENDAR",
+  ].join("\r\n");
+  const icsHref = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+
+  return { google, icsHref };
 }
 
 let _eventsCache = null;
@@ -204,5 +239,5 @@ function slugify(s) {
 Object.assign(window, {
   mapEventRow, useSupaEvents, loadEvents, refreshEvents, getEventsSnapshot,
   fetchVolunteerRoles, fetchEventSponsors, fetchLeaderboard, computeLeaderboard,
-  iconForRole, slugify,
+  iconForRole, slugify, addToCalendarLinks,
 });

@@ -13,7 +13,7 @@ function AdminApp() {
   const events = eventsRaw.map((e) => ({
     id: e.id, dbId: e.dbId, name: e.name, cadence: e.cadence, place: e.place,
     featured: e.featured, category: e.category, tagline: e.tagline || "",
-    volunteeringEnabled: e.volunteeringEnabled,
+    volunteeringEnabled: e.volunteeringEnabled, date: e.date,
   }));
 
   const loadOrgData = React.useCallback(async () => {

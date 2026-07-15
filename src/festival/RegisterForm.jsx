@@ -65,7 +65,10 @@ function RegisterForm() {
               <div style={{ width: 60, height: 60, borderRadius: "var(--radius-full)", margin: "0 auto 16px", background: "var(--green-400)", color: "var(--navy-950)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="check" size={32} /></div>
               <div style={{ font: "var(--text-title-lg)", color: "#fff" }}>You're in! See you on 1 August.</div>
               <p style={{ font: "var(--text-body-md)", color: "var(--navy-200)", margin: "8px 0 4px" }}>Saturday, 1 August 2026 · Alaro City, Epe, Lagos</p>
-              <p style={{ font: "var(--text-body-sm)", color: "var(--navy-300)", margin: "0 0 20px" }}>Bring a friend — the more, the merrier.</p>
+              <p style={{ font: "var(--text-body-sm)", color: "var(--navy-300)", margin: "0 0 16px" }}>Bring a friend — the more, the merrier.</p>
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+                <window.AddToCalendarButtons event={featured} dark />
+              </div>
               <div className="btn-pill"><Button variant="secondary" size="md" icon={<Icon name="share-2" size={16} />} style={{ borderRadius: "var(--radius-full)" }} onClick={inviteFriend}>Add a friend</Button></div>
             </div>
           ) : (

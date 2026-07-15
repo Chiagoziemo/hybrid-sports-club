@@ -6,16 +6,29 @@
 // `type` isn't admin-editable — it defaults to 'Other' for new events and
 // is left untouched on edits; `category` (matching the site's filter
 // tabs) is the taxonomy the admin actually manages.
+// events.date is stored as UTC timestamptz; the admin form works in
+// Lagos local time (WAT, fixed UTC+1, no DST) since that's the only
+// timezone this club operates in.
+function isoToLagosLocalInput(iso) {
+  if (!iso) return "";
+  const lagos = new Date(new Date(iso).getTime() + 60 * 60 * 1000);
+  return lagos.toISOString().slice(0, 16);
+}
+function lagosLocalInputToIso(local) {
+  return local ? new Date(local + ":00+01:00").toISOString() : null;
+}
+
 function EditSheet({ event, onClose, onSave }) {
   const { Sheet, Input, Select, Button } = window.DS;
-  const blank = { name: "", schedule: "", place: "", category: EVENT_FILTERS[0], tagline: "", volunteeringEnabled: false };
-  const [form, setForm] = React.useState(event ? { ...blank, ...event } : blank);
+  const blank = { name: "", schedule: "", place: "", category: EVENT_FILTERS[0], tagline: "", volunteeringEnabled: false, dateLocal: "" };
+  const toForm = (ev) => ({ ...blank, ...ev, dateLocal: isoToLagosLocalInput(ev.date) });
+  const [form, setForm] = React.useState(event ? toForm(event) : blank);
   const [saving, setSaving] = React.useState(false);
-  React.useEffect(() => { setForm(event ? { ...blank, ...event } : blank); }, [event]);
+  React.useEffect(() => { setForm(event ? toForm(event) : blank); }, [event]);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const save = async () => {
     setSaving(true);
-    await onSave(form);
+    await onSave({ ...form, date: lagosLocalInputToIso(form.dateLocal) });
     setSaving(false);
   };
   return (
@@ -25,6 +38,7 @@ function EditSheet({ event, onClose, onSave }) {
         <Select label="Category" value={form.category} onChange={set("category")} options={EVENT_FILTERS} />
         <Input label="Schedule" value={form.schedule} onChange={set("schedule")} placeholder="e.g. Weekly · Saturdays, 7:00–10:00am" />
         <Input label="Location" value={form.place} onChange={set("place")} placeholder="e.g. Hybrid Pitch, Lekki" />
+        <Input label="Date & time (optional — for one-off events, enables 'Add to calendar')" type="datetime-local" value={form.dateLocal} onChange={set("dateLocal")} />
         <Input label="Tagline (optional)" value={form.tagline} onChange={set("tagline")} placeholder="Short one-line description" />
         <label style={{ display: "flex", alignItems: "center", gap: 10, font: "var(--text-label-md)", color: "var(--navy-800)", cursor: "pointer" }}>
           <input type="checkbox" checked={!!form.volunteeringEnabled} onChange={(e) => setForm((f) => ({ ...f, volunteeringEnabled: e.target.checked }))} />
@@ -71,14 +85,14 @@ function Calendar({ events }) {
       const { error } = await window.sb.from("events").update({
         title: form.name, schedule: form.schedule, location: form.place,
         description: form.tagline || null, category: form.category,
-        volunteering_enabled: !!form.volunteeringEnabled,
+        volunteering_enabled: !!form.volunteeringEnabled, date: form.date,
       }).eq("id", editing.dbId);
       if (error) { console.error(error); return; }
     } else {
       const { error } = await window.sb.from("events").insert({
         title: form.name, slug: window.slugify(form.name), type: "Other", category: form.category,
         schedule: form.schedule, location: form.place, description: form.tagline || null,
-        volunteering_enabled: !!form.volunteeringEnabled,
+        volunteering_enabled: !!form.volunteeringEnabled, date: form.date,
       });
       if (error) { console.error(error); return; }
     }

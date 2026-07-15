@@ -103,6 +103,9 @@ function RsvpModal() {
               <p style={{ font: "var(--text-body-md)", color: "var(--text-secondary-dark)", marginTop: 6 }}>
                 {featured.dateLabel}{featured.timeLabel ? ` · ${featured.timeLabel}` : ""} · {featured.place}
               </p>
+              <div style={{ display: "flex", justifyContent: "center", marginTop: 14 }}>
+                <window.AddToCalendarButtons event={featured} dark />
+              </div>
               <div className="btn-pill"><Button variant="primary" size="md" style={{ marginTop: 16, borderRadius: "var(--radius-full)" }} onClick={reset}>Done</Button></div>
             </div>
           ) : (

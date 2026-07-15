@@ -207,9 +207,36 @@ function NKicker({ n, children, style }) {
   );
 }
 
+// Shared "Add to calendar" pair (Google + downloadable .ics for Apple/
+// Outlook). Only renders when the event has a real one-off date/time —
+// window.addToCalendarLinks (src/data.jsx) returns null for recurring
+// weekly sessions with no single instant to add.
+function AddToCalendarButtons({ event, dark }) {
+  const links = window.addToCalendarLinks(event);
+  if (!links) return null;
+  const btnStyle = {
+    display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: "var(--radius-full)",
+    font: "var(--text-label-md)", fontWeight: 700, textDecoration: "none",
+    border: "1px solid " + (dark ? "var(--border-subtle-dark)" : "var(--border-default-light)"),
+    color: dark ? "#fff" : "var(--navy-800)",
+    background: dark ? "var(--navy-800)" : "transparent",
+  };
+  return (
+    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+      <a href={links.google} target="_blank" rel="noreferrer" style={btnStyle}>
+        <Icon name="calendar-plus" size={15} />Google Calendar
+      </a>
+      <a href={links.icsHref} download="hybrid-sports-club-event.ics" style={btnStyle}>
+        <Icon name="calendar-plus" size={15} />Apple / Outlook (.ics)
+      </a>
+    </div>
+  );
+}
+
 Object.assign(window, {
   DS, Icon, NKicker, useCountdown, useReveal, openRsvpModal, PHOTO,
   CLUB, EVENT_FILTERS, ACTIVITIES, FEATURED, ROLES, SPONSORS, GALLERY,
   GUEST_TYPES, FESTIVAL_ACTIVITIES, BANK,
   HERO_STATS, BENEFITS, JOIN_STEPS, TICKER_TAGS, COLLABS, TESTIMONIALS,
+  AddToCalendarButtons,
 });
